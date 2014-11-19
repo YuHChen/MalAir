@@ -1,0 +1,44 @@
+Data Structure:
+	==== Graph ==== 
+	* Cities (vertices) stored in vector
+	* Flights (edges) stored in adjacency list 
+	* Flight is a struct with the following:
+		int destCity
+		Time depart
+		Time duration
+		float price
+		Flight *next (for linked list implementation)
+	* Time class will handle all time arithmetic
+		time stored in military time
+
+Algorithms:
+	==== Itinerary ====
+	* (J)ust get me there: 
+		use DFS, once we find the destination city, we have a path
+	* (F)ewest hops: 
+		use BFS, once we find the destination city, we have the path with fewest hops
+	* (S)hortest trip:
+		use shortest path algorithm (Dijkstra?) with duration as weight
+	* (C)heapest:
+		use shortest path algorithm (Dijkstra?) with price as weight
+	* (P)rint:
+		use DFS to traverse graph and print cities and their flights
+
+Interface:
+	==== Time ====
+	class Time{
+	  private:
+		int time;
+				
+	  public:
+		operator<(const Time t);
+		  // compares military time, returns true if this.time < t.time
+		operator>(const Time t);
+		  // compares military time, returns true if this.time > t.time
+		friend istream& (istream *in, Time &t);
+		  // reads in time with format HH:MMam or HH:MMpm
+		  // converts to military time and stores in int time
+		friend ostream& (ostream &out, const Time &t);
+		  // converts military time to HH:MMam or HH:MMpm
+		  // prints formatted time to out
+	}; //end of class Time
