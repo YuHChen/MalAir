@@ -31,10 +31,18 @@ class Time{
 	int time;
 			
   public:
-	operator<(const Time t);
+	operator<(const Time &t);
 	  // compares military time, returns true if this.time < t.time
-	operator>(const Time t);
+	operator>(const Time &t);
 	  // compares military time, returns true if this.time > t.time
+	operator<=(const Time &t);
+	  // compares military time, returns true if this.time <= t.time
+	operator>=(const Time &t);
+	  // compares military time, returns true if this.time >= t.time
+	operator==(const Time &t);
+	  // compares military time, returns true if this.time == t.time
+	operator!=(const Time &t);
+	  // compares military time, returns true if this.time != t.time
 	friend istream& (istream *in, Time &t);
 	  // reads in time with format HH:MMam or HH:MMpm
 	  // converts to military time and stores in int time
