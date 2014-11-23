@@ -50,3 +50,11 @@ class Time{
 	  // converts military time to HH:MMam or HH:MMpm
 	  // prints formatted time to out
 }; //end of class Time
+
+==== Flight ====
+typedef struct {
+	int destCity;
+	Time depart;
+	Time duration;
+	float price;
+} Flight;
