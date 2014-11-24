@@ -18,7 +18,7 @@ class City
 	public:
 		City();
 		~City();
-		void addFlight(int destCity, Time depart, Time duration, float price);	
+	//	void addFlight(int destCity, Time depart, Time duration, float price);	
 		void addFlight(Flight F);
 		
 };
