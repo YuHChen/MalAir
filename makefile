@@ -12,7 +12,8 @@ OBJ_FILES = \
 
 all: $(TARGET)
 
-$TARGET: $(OBJ_FILES) -o $(TARGET).exe
+$(TARGET): $(OBJ_FILES)
+	g++ -Wall $(OBJ_FILES) -o $(TARGET).exe
 
 Driver.o: Driver.cpp
 	g++ -Wall -c Driver.cpp

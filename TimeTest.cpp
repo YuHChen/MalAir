@@ -16,4 +16,13 @@ int main(){
 
   cout << "sum: " << test1 + test2 << endl;
   cout << "diff: " << test1 - test2 << endl;
+
+  Time test3;
+  cout << "Enter a second time: ";
+  cin >> test3;
+  cout << test1 << " is before " << test3 << ": ";
+  if(test1 < test3)
+    cout << "true" << endl;
+  else
+    cout << "false" << endl;
 }
