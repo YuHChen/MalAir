@@ -14,7 +14,8 @@ class City
 
 	private:
 		vector<Flight> flights;	
-
+		string name;
+		
 	public:
 		City();
 		~City();
