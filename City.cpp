@@ -18,3 +18,8 @@ string City::getName()
 {
 	return name;
 }
+ostream &operator<<(ostream &out, const City &C)
+{
+	out << C.name;
+	return out;
+}

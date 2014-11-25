@@ -30,6 +30,7 @@ class City
 	//	void addFlight(int destCity, Time depart, Time duration, float price);	
 		void addFlight(Flight F);
 		string getName();
+		friend ostream & operator<<(ostream &out, const City &C);
 		
 };
 #endif

@@ -42,6 +42,7 @@ int main(int argc, char **argv){
 		flightSchedule >> cost;
 		m.addCity(dept);
 		m.addCity(dest);
+		cout << m << endl;
 		
 		// need to find city in Map
 		// if depart City doesn't exist, create City, add to Map
