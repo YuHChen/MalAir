@@ -20,6 +20,15 @@ string City::getName()
 }
 ostream &operator<<(ostream &out, const City &C)
 {
-	out << C.name;
-	return out;
+  cout << "there are " << C.flights.size() << " flights from " << C.name;
+  if(C.flights.size() > 0) cout << endl;
+  for(vector<Flight>::const_iterator it = C.flights.begin(); it != C.flights.end(); it++){
+    out << C.name << " ";
+    out << (it->destCity)->getName() << " ";
+    out << it->depart << " ";
+    out << it->arrival << " $";
+    out << it->price;
+    if(it+1 != C.flights.end()) out << endl;
+  }
+  return out;
 }

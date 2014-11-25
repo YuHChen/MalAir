@@ -16,8 +16,7 @@ class Map
 		Map();
 		~Map();
 		void addCity(string cName);
-		void addFlight(string dept, Flight f);
-		
+		void addFlight(string dept, string dest, Time deptTime, Time dur, Time arrTime, float cost);
 		// menu options
 		void justGetMeThere(City depart, City dest, Time departTime);//J
 		void fewestHops(City depart, City dest, Time departTime);    //F

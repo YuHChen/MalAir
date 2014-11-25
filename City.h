@@ -12,7 +12,8 @@ typedef struct
 {	
 	City *destCity;
 	Time depart;
-	Time durtation;
+	Time duration;
+	Time arrival;
 	float price;
 }Flight;		
 
