@@ -1,6 +1,6 @@
-#include "Graph.h"
+#include "Map.h"
 
-Graph::Graph()
+Map::Map()
 {
 }
 
