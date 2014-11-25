@@ -138,7 +138,7 @@ istream& operator>>(istream &in, Time &t){
   in >> std::skipws >> c;
 
   // clear cin
-  cin.ignore(256, '\n');
+  //cin.ignore(256, '\n');
 
   // adjust for hour overflow
   if(hour >= 24)
