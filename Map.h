@@ -2,6 +2,10 @@
 #define MAP_H
 
 #include "City.h"
+#include <vector>
+//#include <cstdlib>
+
+using namespace std;
 
 class Map
 {
@@ -11,7 +15,7 @@ class Map
 	public:
 		Map();
 		~Map();
-		void addCity(string name);
+		void addCity(string cName);
 		void addFlight(string dept, Flight f);
 		
 		// menu options

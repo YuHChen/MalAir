@@ -1,11 +1,20 @@
 #include "City.h"
 
-City City()
+City::City()
 {
 }
-
-void addFlight(Flight f)
+City::City(string cName)
+{
+	name = cName;
+}
+City::~City()
+{
+}
+void City::addFlight(Flight f)
 {
 	flights.push_back(f);
 }
-
+string City::getName()
+{
+	return name;
+}

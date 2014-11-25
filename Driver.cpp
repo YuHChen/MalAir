@@ -33,13 +33,15 @@ int main(int argc, char **argv){
 	float cost;
 	Time arrTime, deptTime;
 	Flight f;
-	while(!flightSchedule.fail()){
+	while(!flightSchedule.fail()){	
 		flightSchedule >> dept;
 		flightSchedule >> dest;
-		flightSchedule >> deptTime;
-		flightSchedule >> arrTime;
-		flightSchdule.get(); //Get rid of the $ sign
+	//	flightSchedule >> deptTime;
+	//	flightSchedule >> arrTime;
+		flightSchedule.get(); //Get rid of the $ sign
 		flightSchedule >> cost;
+		m.addCity(dept);
+		m.addCity(dest);
 		
 		// need to find city in Map
 		// if depart City doesn't exist, create City, add to Map
