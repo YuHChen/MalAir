@@ -31,24 +31,39 @@ class Time{
 	int time;
 			
   public:
-	operator<(const Time &t);
+	Time();
+	  // default time: 0000
+	Time(int t);
+	  // takes int format HHMM (military), convert to HH:MM 
+	  // for use with Flight struct, converts duration (int) to perform time arithmetic
+	
+	int asInt();
+	  // getter, returns time (int)
+	Time& operator=(const Time &t);
+	  // assignment operator
+	Time operator+(const Time &t);
+	  // adds two Times
+	Time operator-(const Time &t);
+	  // subtracts two Times
+	bool operator<(const Time &t);
 	  // compares military time, returns true if this.time < t.time
-	operator>(const Time &t);
+	bool operator>(const Time &t);
 	  // compares military time, returns true if this.time > t.time
-	operator<=(const Time &t);
+	bool operator<=(const Time &t);
 	  // compares military time, returns true if this.time <= t.time
-	operator>=(const Time &t);
+	bool operator>=(const Time &t);
 	  // compares military time, returns true if this.time >= t.time
-	operator==(const Time &t);
+	bool operator==(const Time &t);
 	  // compares military time, returns true if this.time == t.time
-	operator!=(const Time &t);
+	bool operator!=(const Time &t);
 	  // compares military time, returns true if this.time != t.time
-	friend istream& (istream *in, Time &t);
+	friend istream& operator>>(istream *in, Time &t);
 	  // reads in time with format HH:MMam or HH:MMpm
 	  // converts to military time and stores in int time
-	friend ostream& (ostream &out, const Time &t);
+	friend ostream& operator<<(ostream &out, const Time &t);
 	  // converts military time to HH:MMam or HH:MMpm
 	  // prints formatted time to out
+	~Time();
 }; //end of class Time
 
 ==== Flight ====
