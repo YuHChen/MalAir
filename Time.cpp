@@ -97,6 +97,7 @@ istream& operator>>(istream &in, Time &t){
   //cout << "Called friend istream& operator>> [Time]" << endl;
   int hour = 0;
   int min = 0;
+  bool colon = false;
   char c;
 
   // get hour
@@ -106,15 +107,20 @@ istream& operator>>(istream &in, Time &t){
     hour += (c-'0')*10;
   else 
     cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
-  in >> std::skipws >> c;
+  in >> std::skipws >> c; // should be second digit of hour or :
   if(isdigit(c))
     hour += (c-'0');
+  else if(c == ':'){ // only one digit for hour
+    hour /= 10;
+    colon = true;
+  }
   else
     cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
-
-  // get :
-  in >> std::skipws >> c;
-
+  
+  // get : if still in stream
+  if(!colon)
+    in >> std::skipws >> c;
+  
   // get minute
   in >> std::skipws >> c;
   if(isdigit(c))
@@ -136,9 +142,6 @@ istream& operator>>(istream &in, Time &t){
       hour += 12;
   }
   in >> std::skipws >> c;
-
-  // clear cin
-  //cin.ignore(256, '\n');
 
   // adjust for hour overflow
   if(hour >= 24)
@@ -166,24 +169,15 @@ ostream& operator<<(ostream &out, const Time &t){
   if(am){
     if(hr == 0) // 00:00 to 00:59
       out << 12;
-    else{ // 01:00 +
-      // make sure output has 2 digits (helps with >>)
-      if((hr/10) > 0) // has 2 digits 
-	out << hr; 
-      else // has 1 digit
-	out << "0" << hr;
-    } 
+    else // 01:00 +
+      out << hr;
+    
   }
   else{ // pm
     if(hr == 12) // 12:00 to 12:59
       out << hr; 
-    else{ // 13:00 +
-      // make sure output has 2 digits (helps with >>)
-      if((hr/22) > 0) // has 2 digits 
-	out << hr%12; 
-      else // has 1 digit
-	out << "0" << hr%12; 
-    }
+    else // 13:00 +
+      out << hr%12; 
   }
 
   // output the :
