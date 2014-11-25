@@ -42,21 +42,15 @@ int main(){
   hour = 1;
   min = 0;
   while(hour < 12){
-    if(hour/10 > 0)
-      times << hour;
-    else
-      times << "0" << hour;
+    times << hour;
     if(min/10 > 0)
       times << ":" << min << am << endl;
     else
       times << ":0" << min << am << endl;
     
     times << 1 << endl;
-
-    if(hour/10 > 0)
-      times << hour;
-    else
-      times << "0" << hour;
+    
+    times << hour;
     if(min/10 > 0)
       times << ":" << min << am << endl;
     else
@@ -90,21 +84,15 @@ int main(){
   hour = 1;
   min = 0;
   while(hour < 12){
-    if(hour/10 > 0)
-      times << hour;
-    else
-      times << "0" << hour;
+    times << hour;
     if(min/10 > 0)
       times << ":" << min << pm << endl;
     else
       times << ":0" << min << pm << endl;
-
+    
     times << 1 << endl;
     
-    if(hour/10 > 0)
-      times << hour;
-    else
-      times << "0" << hour;
+    times << hour;
     if(min/10 > 0)
       times << ":" << min << pm << endl;
     else
