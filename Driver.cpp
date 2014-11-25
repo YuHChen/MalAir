@@ -33,19 +33,29 @@ int main(int argc, char **argv){
 	float cost;
 	Time arrTime, deptTime;
 	Flight f;
-	while(!flightSchedule.fail()){
-		flightSchedule >> dept;
-		flightSchedule >> dest;
-		flightSchedule >> deptTime;
-		flightSchedule >> arrTime;
-		flightSchdule.get(); //Get rid of the $ sign
-		flightSchedule >> cost;
+	char c;
+	while(!flightSchedule.fail()){	
+	  // read in 
+	  flightSchedule >> dept;
+	  if(flightSchedule.fail()) break;
+	  flightSchedule >> dest;
+	  flightSchedule >> deptTime;
+	  flightSchedule >> arrTime;
+	  flightSchedule >> c; //Get rid of the $ sign
+	  flightSchedule >> cost;
+	  m.addCity(dept);
+	  m.addCity(dest);
+
+	  // cities guranteed to exist
+	  m.addFlight(dept, dest, deptTime,(arrTime - deptTime), arrTime, cost); 
 		
 		// need to find city in Map
 		// if depart City doesn't exist, create City, add to Map
 		// if depart City does exist, find City, add Flight to that City
 		// make sure dest City exists, if not create add
 	}
+	cout << m << endl;
+	  
     }
   }
 
