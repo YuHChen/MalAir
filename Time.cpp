@@ -1,28 +1,28 @@
 #include "Time.h"
 
 Time::Time(){
-  cout << "Called Time::Time() [default constructor]" << endl;
+  //cout << "Called Time::Time() [default constructor]" << endl;
   time = 0;
 }
 
 Time::Time(int t){
-  cout << "Called Time::Time(int) [value constructor]" << endl;
+  //cout << "Called Time::Time(int) [value constructor]" << endl;
   time = t;
 }
 
 int Time::asInt(){
-  cout << "Called Time::asInt()" << endl;
+  //cout << "Called Time::asInt()" << endl;
   return time;
 }
 
 Time& Time::operator=(const Time &t){
-  cout << "Called Time::operator= [assignment operator]" << endl;
+  //cout << "Called Time::operator= [assignment operator]" << endl;
   time = t.time;
   return *this;
 }
 
 Time Time::operator+(const Time &t){
-  cout << "Called Time::operator+" << endl;
+  //cout << "Called Time::operator+" << endl;
   Time result;
   int resultMin = (this->time%100) + (t.time%100);
   int resultHr = (this->time/100) + (t.time/100);
@@ -43,7 +43,7 @@ Time Time::operator+(const Time &t){
 }
 
 Time Time::operator-(const Time &t){
-  cout << "Called Time::operator-" << endl;
+  //cout << "Called Time::operator-" << endl;
   Time result;
   int resultMin = (this->time%100) - (t.time%100);
   int resultHr = (this->time/100) - (t.time/100);
@@ -64,32 +64,32 @@ Time Time::operator-(const Time &t){
 }
 
 bool Time::operator<(const Time &right) const{
-  cout << "Called Time::operator<" << endl;
+  //cout << "Called Time::operator<" << endl;
   return this->time < right.time;
 }
 
 bool Time::operator>(const Time &right) const{
-  cout << "Called Time::operator>" << endl;
+  //cout << "Called Time::operator>" << endl;
   return this->time > right.time;
 }
 
 bool Time::operator>=(const Time &right) const{
-  cout << "Called Time::operator>=" << endl;
+  //cout << "Called Time::operator>=" << endl;
   return !operator<(right);
 }
 
 bool Time::operator<=(const Time &right) const{
-  cout << "Called Time::operator<=" << endl;
+  //cout << "Called Time::operator<=" << endl;
   return !operator>(right);
 }
 
 bool Time::operator==(const Time &right) const{
-  cout << "Called Time::operator==" << endl;
+  //cout << "Called Time::operator==" << endl;
   return this->time == right.time;
 }
 
 bool Time::operator!=(const Time &right) const{
-  cout << "Called Time::operator!=" << endl;
+  //cout << "Called Time::operator!=" << endl;
   return !operator==(right);
 }
 
@@ -98,38 +98,50 @@ istream& operator>>(istream &in, Time &t){
   int hour = 0;
   int min = 0;
   char c;
+
   // get hour
-  in.get(c);
-  if(isdigit(c))
+  in >> std::skipws >> c;
+  if(!in.good()) return in; // exit if end of file
+  if(isdigit(c)) 
     hour += (c-'0')*10;
-  else
-    cout << "Error: not valid time" << endl; //maybe to cerr
-  in.get(c);
+  else 
+    cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
+  in >> std::skipws >> c;
   if(isdigit(c))
     hour += (c-'0');
   else
-    cout << "Error: not valid time" << endl; //maybe to cerr
+    cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
+
   // get :
-  in.get(c);
+  in >> std::skipws >> c;
+
   // get minute
-  in.get(c);
+  in >> std::skipws >> c;
   if(isdigit(c))
     min += (c-'0')*10;
   else
-    cout << "Error: not valid time" << endl; //maybe to cerr
-  in.get(c);
+    cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
+  in >> std::skipws >> c;
   if(isdigit(c))
     min += (c-'0');
   else
-    cout << "Error: not valid time" << endl; //maybe to cerr
+    cout << "Error: not valid time, received: " << c << endl; //maybe to cerr
+
   // get am/pm
-  in.get(c);
-  if(isalpha(c))
-    if( (c == 'p') || (c == 'P') )
+  in >> std::skipws >> c;
+  if(isalpha(c)){
+    if( (c == 'p') && (hour < 12) ) 
+      hour += 12;	
+    else if( (c == 'a') && (hour == 12) )
       hour += 12;
-  // clear in
-  in.ignore(256, '\n');
-  in.clear();
+  }
+  
+  // clear cin
+  cin.ignore(256, '\n');
+
+  // adjust for hour overflow
+  if(hour >= 24)
+    hour %= 24;
   
   // set time
   t.time = (hour*100) + min;
@@ -143,43 +155,55 @@ ostream& operator<<(ostream &out, const Time &t){
   int min = t.time % 100;
   int hr = t.time / 100;
   bool am = true;
+
   // check if am or pm, set flag accordingly
-  if(hr > 12){
+  if( (hr >= 12) && (hr < 24) ){
     am = false;
   }
-  // output hour
+
+  // output hour HH
   if(am){
-    // make sure output has 2 digits (helps with >>)
-    if(hr >= 10)
-      out << hr;
-    else
-      out << "0" << hr;
+    if(hr == 0) // 00:00 to 00:59
+      out << 12;
+    else{ // 01:00 +
+      // make sure output has 2 digits (helps with >>)
+      if((hr/10) > 0) // has 2 digits 
+	out << hr; 
+      else // has 1 digit
+	out << "0" << hr;
+    } 
   }
-  else{
-    // make sure output has 2 digits (helps with >>)
-    if(hr-12 >= 10)
-      out << hr-12;
-    else
-      out << "0" << hr-12;
+  else{ // pm
+    if(hr == 12) // 12:00 to 12:59
+      out << hr; 
+    else{ // 13:00 +
+      // make sure output has 2 digits (helps with >>)
+      if((hr/22) > 0) // has 2 digits 
+	out << hr%12; 
+      else // has 1 digit
+	out << "0" << hr%12; 
+    }
   }
-  // output :
+
+  // output the :
   out << ":";
-  // output minute
+
+  // output minute MM
   // make sure output has 2 digits (helps with >>)
-  if(min >= 10)
+  if(min/10 > 0)
     out << min;
   else
     out << "0" << min;
+
   // output am/pm
   if(am)
     out << "am";
   else
-    cout << "pm";
-  out << endl;
+    out << "pm";
 
   return out;
 }
 
 Time::~Time(){
-  cout << "Called Time::~Time() [destructor]" << endl;
+  //cout << "Called Time::~Time() [destructor]" << endl;
 }
