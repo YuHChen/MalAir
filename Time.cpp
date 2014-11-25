@@ -135,7 +135,8 @@ istream& operator>>(istream &in, Time &t){
     else if( (c == 'a') && (hour == 12) )
       hour += 12;
   }
-  
+  in >> std::skipws >> c;
+
   // clear cin
   cin.ignore(256, '\n');
 
