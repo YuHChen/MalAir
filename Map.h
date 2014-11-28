@@ -24,6 +24,6 @@ class Map
 		void cheapestTrip(City depart, City dest, Time departTime);  //S
 		void displayAll();  					     //P
 		friend ostream &operator<<(ostream &out, const Map &m);
-		
+
 };
 #endif
