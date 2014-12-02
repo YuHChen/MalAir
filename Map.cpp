@@ -80,5 +80,6 @@ void Map::cheapestTrip(City depart, City dest, Time departTime){
 }
 
 void Map::displayAll(){
-	//Gonna implement
+	//Uses the implemented outputstream to send the current map data to the screen.
+	cout<<*(this);
 }
