@@ -54,9 +54,25 @@ int main(int argc, char **argv){
 		// if depart City does exist, find City, add Flight to that City
 		// make sure dest City exists, if not create add
 	}
-	cout << m << endl;
-	  
+	cout << m << endl;	  
     }
+    
+    // finished reading in flight schedule
+    // proceed with user input
+    string deptCity, destCity;
+    cout << "Enter a departure city: ";
+    cin >> deptCity;
+    cout << "You entered: " << deptCity << endl;
+    cout << "Enter a destination city: ";
+    cin >> destCity;
+    cout << "You entered: " << destCity << endl;
+    
+    /*
+    while(!cin.fail()){
+      
+    }
+    */
+
   }
 
   return 0;

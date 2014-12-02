@@ -1,20 +1,23 @@
 Data Structure:
-==== Graph ==== 
-* Cities (vertices) stored in vector
-* Flights (edges) stored in adjacency list 
-* Flight is a struct with the following:
-	int destCity
-	Time depart
-	Time duration
-	float price
-	Flight *next (for linked list implementation)
+==== Map (The Graph) ==== 
+* Cities (vertices) stored in vector inside Map
+	Where each City is a node(vertex) and the Flights in the City are the edges
 * Time class will handle all time arithmetic
 	time stored in military time
+==== City (Vertex) ====
+* Flights (Edges) stored in vector inside City 
+* Flight is a struct with the following:
+	City *destCity
+	Time depart
+	Time duration
+	Time arrival
+	float price
+* Name of city as string
 
 Algorithms:
 ==== Itinerary ====
 * (J)ust get me there: 
-	use DFS, once we find the destination city, we have a path
+use DFS, once we find the destination city, we have a path
 * (F)ewest hops: 
 	use BFS, once we find the destination city, we have the path with fewest hops
 * (S)hortest trip:
@@ -65,10 +68,22 @@ class Time{
 	  // prints formatted time to out
 	~Time();
 }; //end of class Time
+==== City ====
+	City();
+	  // Defaults are empty
+	City(string name);
+	  // Creates a City with setting the name of the city to the given name and creates empty flight vector
+	~City();
+	void addFlight(int destCity, Time depart, Time duration, float price);	
+	  
+	void addFlight(Flight F);
+	string getName();
+	friend ostream & operator<<(ostream &out, const City &C);
+	
 
 ==== Flight ====
 typedef struct {
-	int destCity;
+	City *destCity;
 	Time depart;
 	Time duration;
 	float price;
