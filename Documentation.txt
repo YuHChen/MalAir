@@ -17,15 +17,16 @@ Data Structure:
 Algorithms:
 ==== Itinerary ====
 * (J)ust get me there: 
-use DFS, once we find the destination city, we have a path
+	use DFS, once we find the destination city, we have a path
 * (F)ewest hops: 
-	use BFS, once we find the destination city, we have the path with fewest hops
+	use modified BFS (Dijkstra), once we find the destination city, we have the path with fewest hops
+	to track path, use (City *prev) in City that points to City to get to before this City
 * (S)hortest trip:
-	use shortest path algorithm (Dijkstra?) with duration as weight
+	use shortest path algorithm (Dijkstra) with earliest arrival as weight
 * (C)heapest:
 	use shortest path algorithm (Dijkstra?) with price as weight
 * (P)rint:
-	use DFS to traverse graph and print cities and their flights
+	use "BFS" to traverse graph and print cities and their flights
 
 Interface:
 ==== Time ====
@@ -68,6 +69,7 @@ class Time{
 	  // prints formatted time to out
 	~Time();
 }; //end of class Time
+
 ==== City ====
 	City();
 	  // Defaults are empty
@@ -80,8 +82,8 @@ class Time{
 	string getName();
 	  // Overloads the << operator
 	friend ostream & operator<<(ostream &out, const City &C);
-==== Map ==== 
 
+==== Map ==== 
 	Map();
 	~Map();
 	  // Adds a City to the cities vector
@@ -102,7 +104,6 @@ class Time{
 	void displayAll();  					     //P
 	  // Overloads the ostream << operator
 	friend ostream &operator<<(ostream &out, const Map &m);
-	
 
 ==== Flight ====
 typedef struct {
@@ -111,3 +112,12 @@ typedef struct {
 	Time duration;
 	float price;
 } Flight;
+
+Responsibilities / Timeline:
+	* Work together on interface of the fly.exe program (Driver, City, Map, Flight, Time)
+	* Work individually on travel options
+		* Ethan - justGetMeThere
+		* Toren - fewestHops
+		* Yu Heng - shortestTrip
+	* Finish by weekend of 12/6, meet up then to put it all together
+	* If time permits, work together on cheapestTrip
