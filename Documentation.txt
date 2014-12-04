@@ -1,28 +1,32 @@
 Data Structure:
-==== Graph ==== 
-* Cities (vertices) stored in vector
-* Flights (edges) stored in adjacency list 
-* Flight is a struct with the following:
-	int destCity
-	Time depart
-	Time duration
-	float price
-	Flight *next (for linked list implementation)
+==== Map (The Graph) ==== 
+* Cities (vertices) stored in vector inside Map
+	Where each City is a node(vertex) and the Flights in the City are the edges
 * Time class will handle all time arithmetic
 	time stored in military time
+==== City (Vertex) ====
+* Flights (Edges) stored in vector inside City 
+* Flight is a struct with the following:
+	City *destCity
+	Time depart
+	Time duration
+	Time arrival
+	float price
+* Name of city as string
 
 Algorithms:
 ==== Itinerary ====
 * (J)ust get me there: 
 	use DFS, once we find the destination city, we have a path
 * (F)ewest hops: 
-	use BFS, once we find the destination city, we have the path with fewest hops
+	use modified BFS (Dijkstra), once we find the destination city, we have the path with fewest hops
+	to track path, use (City *prev) in City that points to City to get to before this City
 * (S)hortest trip:
-	use shortest path algorithm (Dijkstra?) with duration as weight
+	use shortest path algorithm (Dijkstra) with earliest arrival as weight
 * (C)heapest:
 	use shortest path algorithm (Dijkstra?) with price as weight
 * (P)rint:
-	use DFS to traverse graph and print cities and their flights
+	use "BFS" to traverse graph and print cities and their flights
 
 Interface:
 ==== Time ====
@@ -66,10 +70,54 @@ class Time{
 	~Time();
 }; //end of class Time
 
+==== City ====
+	City();
+	  // Defaults are empty
+	City(string name);
+	  // Creates a City with setting the name of the city to the given name and creates empty flight vector
+	~City();
+	  // Adds the flight F to the City's flights vector
+	void addFlight(Flight F);
+	  //Returns the City's name
+	string getName();
+	  // Overloads the << operator
+	friend ostream & operator<<(ostream &out, const City &C);
+
+==== Map ==== 
+	Map();
+	~Map();
+	  // Adds a City to the cities vector
+	void addCity(string cName);
+	  // Determines the departure city and then adds the flight to the Departure City's flights vector
+	void addFlight(string dept, string dest, Time deptTime, Time dur, Time arrTime, float cost);
+	//====	Menu Options ====
+	  // Takes any path from Departure City to the Destination City with arrival on same day as departure 
+	void justGetMeThere(City depart, City dest, Time departTime);//J
+	  // Path from Departure City to the Destination City that takes the fewest number of flights 
+	void fewestHops(City depart, City dest, Time departTime);    //F
+	  // Path from Departure City to the Destination City that takes the shortest amount of time from 
+	  // Departure city departure to Destination City arrival
+	void shortestTrip(City depart, City dest, Time departTime);  //C
+	  // Path from Departure City to the Destination City that costs the least 
+	void cheapestTrip(City depart, City dest, Time departTime);  //S
+	  // Prints the Citys and their respective flights
+	void displayAll();  					     //P
+	  // Overloads the ostream << operator
+	friend ostream &operator<<(ostream &out, const Map &m);
+
 ==== Flight ====
 typedef struct {
-	int destCity;
+	City *destCity;
 	Time depart;
 	Time duration;
 	float price;
 } Flight;
+
+Responsibilities / Timeline:
+	* Work together on interface of the fly.exe program (Driver, City, Map, Flight, Time)
+	* Work individually on travel options
+		* Ethan - justGetMeThere
+		* Toren - fewestHops
+		* Yu Heng - shortestTrip
+	* Finish by weekend of 12/6, meet up then to put it all together
+	* If time permits, work together on cheapestTrip

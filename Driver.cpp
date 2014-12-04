@@ -53,7 +53,7 @@ int main(int argc, char **argv){
 		// if depart City does exist, find City, add Flight to that City
 		// make sure dest City exists, if not create add
 	}
-	cout << m << endl;
+	cout<<m<<endl;
 
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
