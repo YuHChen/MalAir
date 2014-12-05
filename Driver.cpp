@@ -58,7 +58,7 @@ int main(int argc, char **argv){
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
 	cout<<"Enter departure city, destination city, and departure time in that order"<<endl;
-	cout<<"Also enter the "
+	cout<<"Also enter the ";
 	cout<<"Time entered in 12 hour format with colons and am/pm. e.g 8:00am  "<<endl;
 	cin>> deptCity>>destCity>>departTime;
 
