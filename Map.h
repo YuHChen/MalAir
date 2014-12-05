@@ -33,6 +33,6 @@ class Map
 		void displayAll();  					     //P
 		// Overloads the ostream << operator
 		friend ostream &operator<<(ostream &out, const Map &m);
-		
+
 };
 #endif
