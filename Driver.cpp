@@ -48,12 +48,8 @@ int main(int argc, char **argv){
 
 	  // cities guranteed to exist
 	  m.addFlight(dept, dest, deptTime,(arrTime - deptTime), arrTime, cost);
-		// need to find city in Map
-		// if depart City doesn't exist, create City, add to Map
-		// if depart City does exist, find City, add Flight to that City
-		// make sure dest City exists, if not create add
 	}
-	cout<<m<<endl;
+	//cout<<m<<endl;
 
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
@@ -62,7 +58,7 @@ int main(int argc, char **argv){
 	cout<<"Time entered in 12 hour format with colons and am/pm. e.g 8:00am  "<<endl;
 	cin>> deptCity>>destCity>>departTime;
 
-	cout<<"Enter a earliest acceptable returnt time for the trip back"<<endl;
+	cout<<"Enter a earliest acceptable return time for the trip back"<<endl;
 	cin>>earliestRetTime;
 
 	//Asking the User what method they want to perform.
@@ -73,7 +69,7 @@ int main(int argc, char **argv){
 	cout<<"An itinerary from a departure city to a desination city. (No constraints)"<<'\n'<<'\n';
 	//F
 	cout<<"F: Fewest Hops"<<'\n'<<'\t';
-	cout<<"An itinerary that can get from a deparature city  to a destination with the "<<'\n'<<'\t'<<
+	cout<<"An itinerary that can get from a deparature city to a destination with the "<<'\n'<<'\t'<<
 	"fewst direct flight components"<<'\n'<<'\n';
 	//S
 	cout<<"S: Shortest Trip"<<'\n'<<'\t';

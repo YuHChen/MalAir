@@ -143,6 +143,12 @@ istream& operator>>(istream &in, Time &t){
   }
   in >> std::skipws >> c;
 
+  // adjust for minute overflow
+  if(min >= 60){
+    hour += min / 60;
+    min %= 60; 
+  }
+
   // adjust for hour overflow
   if(hour >= 24)
     hour %= 24;
