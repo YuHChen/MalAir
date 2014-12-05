@@ -1,3 +1,5 @@
+Team Members: Ethan Assing, Yu Heng Chen, Toren DeRosa
+
 Data Structure:
 ==== Map (The Graph) ==== 
 * Cities (vertices) stored in vector inside Map
