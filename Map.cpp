@@ -58,7 +58,7 @@ ostream &operator<<(ostream &out, const Map &m)
 	}
 	return out;
 }
-=======
+
 
 /*
 Travel Iterniterary Option Methods with no implementation. Signatures are correct(?)
@@ -69,7 +69,13 @@ void Map::justGetMeThere(City depart, City dest, Time departTime){
 }
 
 void Map::fewestHops(City depart, City dest, Time departTime){
-	cout<<"Not yet implemented!"<<endl;
+	//cout<<"Not yet implemented!"<<endl;
+	numCities = (int)cities.size();
+	int dist[numCities];
+	for(int i = 0; i < numCities; i++)
+	{
+		dist[i] = numeric_limits<int>::max();
+	}
 }
 
 void Map::shortestTrip(City depart,City dest, Time departTime){
