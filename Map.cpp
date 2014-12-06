@@ -58,3 +58,7 @@ ostream &operator<<(ostream &out, const Map &m)
 	}
 	return out;
 }
+void Map::fewestHops()
+{
+
+}
