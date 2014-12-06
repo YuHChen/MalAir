@@ -1,16 +1,16 @@
 #include "Time.h"
 
 int main(){
-  
+ 
   Time test1, test3;
   int duration;
-  
+ 
   while(cin.good()){
     cout << "Enter a time: ";
     cin >> test1;
     if(!cin.good()) break;
     cout << "You entered: " << test1 << endl;
-    
+  
     cout << "Enter a duration: ";
     cin >> duration;
     //cout << "You entered: " << duration << endl;

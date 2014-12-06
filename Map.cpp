@@ -48,7 +48,7 @@ void Map::addCity(string cName)
 ostream &operator<<(ostream &out, const Map &m)
 {
 	int size  = m.cities.size();
-//	for(vector<City>::iterator it = m.cities.begin(); it != m.cities.end(); it++)	
+//	for(vector<City>::iterator it = m.cities.begin(); it != m.cities.end(); it++)
 	//for(int i = 0; i < m.cities.size(); i ++)
 	cout << "there are " << size << " cities" << endl;
 	for(int i = 0; i < size; i ++)
@@ -58,7 +58,29 @@ ostream &operator<<(ostream &out, const Map &m)
 	}
 	return out;
 }
-void Map::fewestHops()
-{
+=======
 
+/*
+Travel Iterniterary Option Methods with no implementation. Signatures are correct(?)
+*/
+
+void Map::justGetMeThere(City depart, City dest, Time departTime){
+	cout<<"Not yet implemented!"<<endl;
+}
+
+void Map::fewestHops(City depart, City dest, Time departTime){
+	cout<<"Not yet implemented!"<<endl;
+}
+
+void Map::shortestTrip(City depart,City dest, Time departTime){
+	cout<<"Not yet implemented!"<<endl;
+}
+
+void Map::cheapestTrip(City depart, City dest, Time departTime){
+	cout<<"Not yet implemented!"<<endl;
+}
+
+void Map::displayAll(){
+	//Uses the implemented outputstream to send the current map data to the screen.
+  cout<<*(this)<< endl;
 }
