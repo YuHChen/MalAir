@@ -76,6 +76,53 @@ void Map::fewestHops(City depart, City dest, Time departTime){
 	{
 		dist[i] = numeric_limits<int>::max();
 	}
+//	Text book version
+	int n = cities.size();
+	vector<int> distLabel(n, -1), predLabel(n);
+	distLabel[depart] = 0;
+	int distance = 0;
+	City c;
+	queue<City> cityQueue;
+	cityQueue.push(start);
+	while (distLabel[dest] < 0 && !cityQueue.empty())
+	{
+		c = cityQueue.front();
+		cityQueue.pop();
+		if (distLabel[c] > distance)
+		{
+			distance++;
+		}
+		for (vector<Flight>::iterator it = cities[c].flights.begin();
+				it != cities[c].flights.end(); it++)
+		{
+			if (distLabel[*it] < 0)
+			{
+				distLabel[*it] = distance + 1;
+				predLabel[*it] = c;
+				cityQueue.push(*it);
+			}
+		}
+		distance++;
+	}
+	vector<Flight> path(distance + 1);
+	if (distLabel[dest] < 0)
+	{
+		cout << "Destination not reachable from this City" << endl;
+	}
+	else 
+	{
+		path[distance] = destination;
+		for (int k = distance - 1; k >= 0; k--)
+		{
+			path[k] = predLabel[path[k+1]];
+		}
+	}
+//	return path;
+	for(int i = 0; i < path.size(); i++)
+	{
+		cout << path[i];
+	}
+	cout << endl;
 }
 
 void Map::shortestTrip(City depart,City dest, Time departTime){
