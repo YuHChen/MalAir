@@ -21,10 +21,11 @@ typedef struct
 class City
 {
 	private:
-		vector<Flight> flights;	
 		string name;
-		
 	public:
+		// Should be private?
+		int cityPos;		
+		vector<Flight> flights;	
 		City();
 		City(string name);
 		~City();
@@ -32,6 +33,8 @@ class City
 		void addFlight(Flight F);
 		string getName();
 		friend ostream & operator<<(ostream &out, const City &C);
+		City &operator=(const City& rightCity);
+
 		
 };
 #endif

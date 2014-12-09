@@ -4,6 +4,8 @@
 #include "City.h"
 #include <vector>
 #include <limits>
+#include <queue>
+#include <stack>
 //#include <cstdlib>
 
 using namespace std;
@@ -12,6 +14,7 @@ class Map
 {
 	private:
 		vector<City> cities;
+		int pos;
 
 	public:
 		Map();
@@ -22,14 +25,14 @@ class Map
 		void addFlight(string dept, string dest, Time deptTime, Time dur, Time arrTime, float cost);
 		//====	Menu Options ====
 		// Takes any path from Departure City to the Destination City with arrival on same day as departure 
-		void justGetMeThere(City depart, City dest, Time departTime);//J
+		void justGetMeThere(string depart, string dest, Time departTime);//J
 		// Path from Departure City to the Destination City that takes the fewest number of flights 
-		void fewestHops(City depart, City dest, Time departTime);    //F
+		void fewestHops(string depart, string dest, Time departTime);    //F
 		// Path from Departure City to the Destination City that takes the shortest amount of time from 
 		// Departure city departure to Destination City arrival
-		void shortestTrip(City depart, City dest, Time departTime);  //C
+		void shortestTrip(string depart, string dest, Time departTime);  //C
 		// Path from Departure City to the Destination City that costs the least 
-		void cheapestTrip(City depart, City dest, Time departTime);  //S
+		void cheapestTrip(string depart, string dest, Time departTime);  //S
 		// Prints the Citys and their respective flights
 		void displayAll();  					     //P
 		// Overloads the ostream << operator

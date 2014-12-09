@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 	  // cities guranteed to exist
 	  m.addFlight(dept, dest, deptTime,(arrTime - deptTime), arrTime, cost);
 	}
-	//cout<<m<<endl;
+//	cout<<m<<endl;
 
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
