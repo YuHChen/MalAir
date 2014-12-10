@@ -19,7 +19,7 @@ class Date
 		int asInt();
 
 		Date& operator=(const Date &d);
-		Date operator+(const Date &d);
+		Date operator+(int i);
 		Date operator-(const Date &d);
 		bool operator<(const Date &right) const;
 		bool operator>(const Date &right) const;

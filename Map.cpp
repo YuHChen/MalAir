@@ -219,7 +219,22 @@ void Map::fewestHops(string depart, string dest, Time departTime)
     }
 }
 void Map::shortestTrip(string depart,string dest, Time departTime){
-	cout<<"Not yet implemented!"<<endl;
+//	cout<<"Not yet implemented!"<<endl;
+	City departC, destC;
+	//cout << "entering loop to get cities" << endl;
+	for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++)
+	{	  
+		if(it->getName() == depart)
+		departC = *it;
+		if(it->getName() == dest)
+		destC = *it;
+	}
+	//cout << "departC: " << departC.getName() << " cityPos: " << departC.cityPos << endl;
+	//cout << "destC: " << destC.getName() << " cityPos: " << destC.cityPos << endl;
+	
+	int n = cities.size();
+	vector<Time>timeLabel(n, 
+
 }
 
 void Map::cheapestTrip(string depart, string dest, Time departTime){
