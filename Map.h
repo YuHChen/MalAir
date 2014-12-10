@@ -1,6 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "Date.h"
 #include "City.h"
 #include <vector>
 #include <limits>
@@ -27,7 +28,7 @@ class Map
 		// Takes any path from Departure City to the Destination City with arrival on same day as departure 
 		void justGetMeThere(string depart, string dest, Time departTime);//J
 		// Path from Departure City to the Destination City that takes the fewest number of flights 
-		void fewestHops(string depart, string dest, Time departTime);    //F
+		void fewestHops(string depart, string dest, Time departTime, Date departDate);    //F
 		// Path from Departure City to the Destination City that takes the shortest amount of time from 
 		// Departure city departure to Destination City arrival
 		void shortestTrip(string depart, string dest, Time departTime);  //C

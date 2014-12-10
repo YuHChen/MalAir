@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "Time.h"
+#include "Date.h"
 #include "City.h"
 #include "Map.h"
 
@@ -53,10 +54,21 @@ int main(int argc, char **argv){
 
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
+	Date departDate, retDate;
 	cout<<"Enter departure city, destination city, and departure time in that order"<<endl;
 	cout<<"Also enter the ";
 	cout<<"Time entered in 12 hour format with colons and am/pm. e.g 8:00am  "<<endl;
 	cin>> deptCity>>destCity>>departTime;
+	cout << "Enter departure date (DD/MM/YYYY): ";
+	cin >> departDate;
+	cout << "Enter return date (DD/MM/YYYY): ";
+	cin >> retDate;
+	
+	// check that user doesn't want to time travel
+	if(retDate < departDate){
+	  cout << "Sorry, we do not offer services for time travel...yet." << endl;
+	  return 0;
+	}
 
 	cout<<"Enter a earliest acceptable return time for the trip back"<<endl;
 	cin>>earliestRetTime;
@@ -94,9 +106,9 @@ int main(int argc, char **argv){
 		break;
 		case'F':
 		  cout << "Here is your itinerary with the fewest hops: " << endl;        
-		  m.fewestHops(deptCity, destCity, departTime);
+		  m.fewestHops(deptCity, destCity, departTime, departDate);
 		  cout << "Here is your itinerary with the fewest hops for the return trip: " << endl;
-		  m.fewestHops(destCity, deptCity, earliestRetTime);
+		  m.fewestHops(destCity, deptCity, earliestRetTime, retDate);
 		break;
 		case'S':
 		m.shortestTrip(deptCity, destCity, departTime);
