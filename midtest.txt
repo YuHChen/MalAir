@@ -1,0 +1,14 @@
+Boston LA 2:15pm 6:15pm $124
+LA Albany 1:15pm 3:52pm $164
+Paris Boston 3:35pm 4:15pm $224
+Albany Binghamton 5:15pm 6:55pm $126
+Boston Austin 10:15am 11:55am $164
+NewYork Boston 7:38am 9:15am $220
+Boston DC 8:15am 2:29pm $274
+Austin NewYork 3:15am 5:25pm $195
+DC Austin 6:15am 8:41am $137
+Binghamton Paris 5:43pm 7:26pm $268
+DC Binghamton 2:14pm 3:00pm $187
+Binghamton Austin 5:24am 8:30am $206
+Albany LA 6:32pm 10:38pm $397
+LA DC 11:24am 2:47pm $346
