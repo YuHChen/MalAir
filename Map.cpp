@@ -110,7 +110,7 @@ void Map::justGetMeThere(string depart, string dest, Time departTime){
 	cout<<"Not yet implemented!"<<endl;
 }
 
-void Map::fewestHops(string depart, string dest, Time departTime)
+void Map::fewestHops(string depart, string dest, Time departTime, Date departDate)
 {
   City departC, destC;
   //cout << "entering loop to get cities" << endl;
@@ -206,16 +206,34 @@ void Map::fewestHops(string depart, string dest, Time departTime)
       
       // path established, print out
       Flight f;
-      while(!path.empty())
+      Time prevArr;
+      Date d = departDate;
+      bool newDate = true;
+      f = path.top();
+      do
 	{
-	  f = path.top(); 
-	  
-	  // print out flight
+	  if(newDate){
+	    cout << d << endl;
+	    newDate = false;
+	  }
+	  	  
+	  // print out flight details
 	  cout << names.top() << " ";
 	  names.pop();
 	  cout << f.destCityName << " " << f.depart << " " << f.arrival << " $" << f.price << endl;
-	  path.pop(); 
-	}
+	  path.pop();
+	  // check if next flight is next day
+	  prevArr = f.arrival;
+	  if(!path.empty())
+	    f = path.top();
+	  else
+	    break;
+	  if(f.depart < prevArr){
+	    // flight needs to be taken next day
+	    d = d + 1;
+	    newDate = true;
+	  }
+	} while(!path.empty());
     }
 }
 void Map::shortestTrip(string depart,string dest, Time departTime){
@@ -233,7 +251,7 @@ void Map::shortestTrip(string depart,string dest, Time departTime){
 	//cout << "destC: " << destC.getName() << " cityPos: " << destC.cityPos << endl;
 	
 	int n = cities.size();
-	vector<Time>timeLabel(n, 
+	//vector<Time>timeLabel(n, 
 
 }
 

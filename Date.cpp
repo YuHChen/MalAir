@@ -13,11 +13,17 @@ Date::Date(int d, int m, int y)
 	year =y;
 }
 
+Date::~Date()
+{
+}
+
 Date &Date::operator=(const Date &d)
 {
 	day = d.day;
 	month = d.month;
 	year = d.year;
+	
+	return *this;
 }
 /*
 Date Date::operator+(const Date &d)
@@ -42,6 +48,8 @@ Date Date::operator+(int i)
 	  year++;
 	  month %= 12;
 	}
+
+	return *this;
 }
 
 bool Date::operator<(const Date &right) const
@@ -69,6 +77,7 @@ bool Date::operator<(const Date &right) const
 	{
 		return retVal;
 	}
+	return retVal;
 }
 
 bool Date::operator>(const Date &right) const
@@ -96,6 +105,7 @@ bool Date::operator>(const Date &right) const
 	{
 		return retVal;
 	}
+	return retVal;
 }
 
 bool Date::operator<=(const Date &right) const
@@ -156,12 +166,15 @@ bool Date::operator!=(const Date &right) const
 
 ostream& operator<<(ostream &out, const Date &d)
 {
-	out << d.month << '/' << d.dat << '/' << d.year;
+  out << d.day << '/' << d.month << '/' << d.year;
 	return out;
 }
  
-istream& operator>>(istream &in, const Date &d)
+istream& operator>>(istream &in, Date &d)
 {
-		
+  char c;
+  in >> d.day >> c >> d.month >> c >> d.year;
+  
+  return in;
 }
 

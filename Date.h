@@ -31,4 +31,6 @@ class Date
 		friend ostream& operator<<(ostream &out, const Date &d);
 
 		~Date();
+};
 
+#endif

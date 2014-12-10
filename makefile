@@ -5,14 +5,14 @@ SRC_FILES = \
 	Time.cpp \
 	Map.cpp \
 	City.cpp\
-	#Flight.cpp
+	Date.cpp
 
 OBJ_FILES = \
 	Driver.o \
 	Time.o \
 	Map.o \
 	City.o\
-	#Flight.o
+	Date.o
 
 all: $(TARGET)
 
@@ -25,8 +25,8 @@ Driver.o: Driver.cpp
 Time.o: Time.cpp
 	g++ -Wall -c Time.cpp
 
-Flight.o: Flight.cpp
-	g++ -Wall -c Flight.cpp
+Date.o: Date.cpp
+	g++ -Wall -c Date.cpp
 
 Map.o: Map.cpp
 	g++ -Wall -c Map.cpp
