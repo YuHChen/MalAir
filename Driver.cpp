@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 	  // cities guranteed to exist
 	  m.addFlight(dept, dest, deptTime,(arrTime - deptTime), arrTime, cost);
 	}
-//	cout<<m<<endl;
+	cout<<m<<endl;
 
 	string deptCity, destCity;
 	Time departTime, earliestRetTime;
@@ -93,7 +93,10 @@ int main(int argc, char **argv){
 		m.justGetMeThere(deptCity, destCity, departTime);
 		break;
 		case'F':
-		m.fewestHops(deptCity, destCity, departTime);
+		  cout << "Here is your itinerary with the fewest hops: " << endl;        
+		  m.fewestHops(deptCity, destCity, departTime);
+		  cout << "Here is your itinerary with the fewest hops for the return trip: " << endl;
+		  m.fewestHops(destCity, deptCity, earliestRetTime);
 		break;
 		case'S':
 		m.shortestTrip(deptCity, destCity, departTime);
