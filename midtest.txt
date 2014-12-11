@@ -12,3 +12,4 @@ DC Binghamton 2:14pm 3:00pm $187
 Binghamton Austin 5:24am 8:30am $206
 Albany LA 6:32pm 10:38pm $397
 LA DC 11:24am 2:47pm $346
+Binghamton Paris 3:30pm 6:37pm $398

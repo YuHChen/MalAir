@@ -96,35 +96,41 @@ int main(int argc, char **argv){
 	cout<<"Displays entire flight schedule "<<'\n'<<'\n';
 
 
-
-	char option;
-	cin>>option;
-	//Is this too much?
-	switch(option){
-		case'J':
-		m.justGetMeThere(deptCity, destCity, departTime);
-		break;
-		case'F':
-		  cout << "Here is your itinerary with the fewest hops: " << endl;        
-		  m.fewestHops(deptCity, destCity, departTime, departDate);
-		  cout << "Here is your itinerary with the fewest hops for the return trip: " << endl;
-		  m.fewestHops(destCity, deptCity, earliestRetTime, retDate);
-		break;
-		case'S':
-		m.shortestTrip(deptCity, destCity, departTime);
-		break;
-		case'C':
-		m.cheapestTrip(deptCity, destCity, departTime);
-		break;
-		case'P':
-		m.displayAll();
-		break;
-		default:
-		 cout<<"Option not recognized"<<endl;
-		break;
-		}
+	while(true){
+	  char option;
+	  cin>>option;
+	  //Is this too much?
+	  switch(option){
+	  case'J':
+	    m.justGetMeThere(deptCity, destCity, departTime);
+	    break;
+	  case'F':
+	    cout << "Here is your itinerary with the fewest hops: " << endl;        
+	    m.fewestHops(deptCity, destCity, departTime, departDate);
+	    cout << endl << "Here is your itinerary with the fewest hops for the return trip: " << endl;
+	    m.fewestHops(destCity, deptCity, earliestRetTime, retDate);
+	    break;
+	  case'S':
+	    cout << "Here is your itinerary for the shortest trip: " << endl;
+	    m.shortestTrip(deptCity, destCity, departTime, departDate);
+	    cout << endl << "Here is your itinerary for the shortest return trip: " << endl;
+	    m.shortestTrip(destCity, deptCity, earliestRetTime, retDate);
+	    break;
+	  case'C':
+	    cout << "Here is your itinerary for cheapest trip: " << endl;
+	    m.cheapestTrip(deptCity, destCity, departTime, departDate);
+	    break;
+	  case'P':
+	    m.displayAll();
+	    break;
+	  default:
+	    cout<<"Option not recognized"<<endl;
+	    break;
+	  }
+	  //break;
 	}
     }
+  }
   return 0;
 }
 

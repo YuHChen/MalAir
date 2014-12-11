@@ -31,9 +31,9 @@ class Map
 		void fewestHops(string depart, string dest, Time departTime, Date departDate);    //F
 		// Path from Departure City to the Destination City that takes the shortest amount of time from 
 		// Departure city departure to Destination City arrival
-		void shortestTrip(string depart, string dest, Time departTime);  //C
+		void shortestTrip(string depart, string dest, Time departTime, Date departDate);  //C
 		// Path from Departure City to the Destination City that costs the least 
-		void cheapestTrip(string depart, string dest, Time departTime);  //S
+		void cheapestTrip(string depart, string dest, Time departTime, Date departDate);  //S
 		// Prints the Citys and their respective flights
 		void displayAll();  					     //P
 		// Overloads the ostream << operator

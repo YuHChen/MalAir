@@ -6,30 +6,14 @@ Map::Map()
 }
 Map::~Map()
 {
-  /*
-  for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++){
-    delete &(*it);
-  }
-  */
 }
 void Map::addFlight(string dept, string dest, Time deptTime, Time dur, Time arrTime, float cost)
 {
 	Flight F;
-	/*
-//	for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++)	
-	{
-		if((*it).getName() == dest)
-		{
-			F.destCity = &(*it);
-		}
-	}
-	*/
-	
 	for(int i = 0; i < (int)cities.size(); i++)
 	{
 		if(cities[i].getName() == dest)
 		{
-		  //F.destCity = &cities[i];
 		  F.destCityPos = cities[i].cityPos;
 		}
 	}
@@ -39,15 +23,7 @@ void Map::addFlight(string dept, string dest, Time deptTime, Time dur, Time arrT
 	F.duration = dur;
 	F.arrival = arrTime;
 	F.price = cost;
-	/*
-	for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++)	
-	{
-		if((*it).getName() == dept)
-		{
-			(*it).addFlight(F);
-		}
-	}
-	*/
+
 	for(int i = 0; i < (int)cities.size(); i++)
 	{
 		if(cities[i].getName() == dept)
@@ -59,15 +35,6 @@ void Map::addFlight(string dept, string dest, Time deptTime, Time dur, Time arrT
 void Map::addCity(string cName)
 {
 	bool found = false;
-	/*
-	for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++)	
-	{
-		if((*it).getName() == cName)
-		{
-			found = true;	
-		}
-	}
-	*/
 	for(int i = 0; i < (int)cities.size(); i++){
 	  if(cities[i].getName() == cName){
 	    found = true;
@@ -76,25 +43,19 @@ void Map::addCity(string cName)
 	if(!found)
 	{
 	  //cout << cName << "added" << endl;
-		City c = City(cName);
-		//if(c != NULL){
-		  c.cityPos = pos;
-		  pos++;
-		  //cout << c.getName() << endl;
-		  cities.push_back(c);
-		  //cout << cities.back().getName() << endl;
-		  //}
-		  //else 
-		  //cout << "Error allocating memory for new City" << endl;
+	  City c = City(cName);
+	  c.cityPos = pos;
+	  pos++;
+	  //cout << c.getName() << endl;
+	  cities.push_back(c);
+	  //cout << cities.back().getName() << endl;
 	}
 }
 ostream &operator<<(ostream &out, const Map &m)
 {
 	int size  = m.cities.size();
-//	for(vector<City>::iterator it = m.cities.begin(); it != m.cities.end(); it++)
 	cout << "there are " << size << " cities" << endl;
 	for(int i = 0; i < size; i++)
-//	for(int i = 0; i < (int)m.cities.size(); i++)
 	{
 		out << m.cities[i];
 		if(i+1 < size) out << endl;
@@ -210,15 +171,17 @@ void Map::fewestHops(string depart, string dest, Time departTime, Date departDat
       Date d = departDate;
       bool newDate = true;
       f = path.top();
+      if(f.depart < departTime)
+	d = d + 1;
       do
 	{
 	  if(newDate){
-	    cout << d << endl;
+	    cout << "\t" << d << endl;
 	    newDate = false;
 	  }
 	  	  
 	  // print out flight details
-	  cout << names.top() << " ";
+	  cout << "\t   " << names.top() << " ";
 	  names.pop();
 	  cout << f.destCityName << " " << f.depart << " " << f.arrival << " $" << f.price << endl;
 	  path.pop();
@@ -236,7 +199,7 @@ void Map::fewestHops(string depart, string dest, Time departTime, Date departDat
 	} while(!path.empty());
     }
 }
-void Map::shortestTrip(string depart,string dest, Time departTime){
+void Map::shortestTrip(string depart,string dest, Time departTime, Date departDate){
 //	cout<<"Not yet implemented!"<<endl;
 	City departC, destC;
 	//cout << "entering loop to get cities" << endl;
@@ -251,12 +214,269 @@ void Map::shortestTrip(string depart,string dest, Time departTime){
 	//cout << "destC: " << destC.getName() << " cityPos: " << destC.cityPos << endl;
 	
 	int n = cities.size();
-	//vector<Time>timeLabel(n, 
+	// for Dijkstra
+	vector<int> duration(n, numeric_limits<int>::max()); // weight
+	vector<City> cityQueue = cities; // might need deep copy???
+	// for tracing path
+	vector<Flight> bestFlightTo; 
+	bestFlightTo.resize(n);
+	vector<int> prevCity(n, -1);
 
+	// initialize for Dijkstra
+	duration[departC.cityPos] = 0;
+	
+	// Dijkstra
+	while(!cityQueue.empty()){
+	  // find City u with min duration
+	  int min = numeric_limits<int>::max();
+	  vector<City>::iterator minIter = cityQueue.begin();
+	  int minPos = minIter->cityPos;
+	  //cout << "finding min..." << endl;
+	  for(vector<City>::iterator it = cityQueue.begin(); it != cityQueue.end(); it++){
+	    //cout << "min: " << min << " duration: " << duration[it->cityPos] << endl;
+	    if(duration[it->cityPos] < min){
+	      // new minimum duration
+	      minPos = it->cityPos;
+	      min = duration[minPos];
+	      minIter = it;
+	    }
+	  }
+	  // u is first City in cityQueue with min duration
+	  City u = cities[minPos];
+	  //cout << "u: " << u.getName() << endl;
+	  // remove u from cityQueue
+	  cityQueue.erase(minIter);
+
+	  // for each outbound flight f of u
+	  for(vector<Flight>::iterator it = u.flights.begin(); it != u.flights.end(); it++){
+	    Time prevArrTime;
+	    if(duration[u.cityPos] == 0){
+	      // currently at the departure city
+	      // outbound flights limited to flights with depart time 
+	      // after user's specified departTime
+	      //cout << "currently at departure city: " << u.getName();
+	      prevArrTime = departTime;
+	      //cout << "\t prevArrTime: " << prevArrTime << endl;
+	    }
+	    else{
+	      // currently at other cities
+	      // outbound flights limited to flights with depart time
+	      // after previous best flight's arrival
+	      //cout << "currently at other cities: " << u.getName() << endl;
+	      prevArrTime = bestFlightTo[u.cityPos].arrival;
+	      //cout << "prevArrTime: " << prevArrTime << endl;
+	    }
+	    // check for valid flight  
+	    // !!! Note: adding in check for valid flight gives shortest trip within one day !!! 
+	    //if(it->depart > prevArrTime){
+	    //cout << "valid flight from " << u.getName() << " to " << it->destCityName << endl;
+	      // *it is a flight that departs later than the arrival time to this city u
+	      // alt := dist[u] + length(u,v)
+	      // alternate duration = duration of entire flight + duration of route to get to city u
+	      // duration of entire flight = layover + duration of airtime
+	      // layover = (it->depart)-prevArrTime
+	      int alt = ((it->depart)-prevArrTime).asInt() + (it->duration).asInt() + duration[u.cityPos];
+	      //cout << "from " << u.getName() << " to " << it->destCityName << endl;
+	      //cout << "alt: " << alt << " duration: " << duration[it->destCityPos] << endl;
+	      //cout << "layover: " << ((it->depart)-prevArrTime).asInt(); 
+	      //cout << " airtime of flight: " << (it->duration).asInt();
+	      //cout << " prev route duration: " << duration[u.cityPos] << endl;
+	      if(alt < duration[it->destCityPos]){
+		// found a better route, so update
+		duration[it->destCityPos] = alt;
+		prevCity[it->destCityPos] = u.cityPos;
+		bestFlightTo[it->destCityPos] = *it;
+		//for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++){
+		//  cout << "duration to " << it->getName() << ": " << duration[it->cityPos] << endl;
+		//}
+	      }
+	      //}
+	  //else
+	      //cout << "invalid flight from " << u.getName() << " to " << it->destCityName << endl;
+	  } // end for each outbound flight f of u	  
+	} // end while(!cityQueue.empty())
+	
+	// all flights relaxed
+	if(duration[destC.cityPos] == numeric_limits<int>::max()){
+	  //cout << "max int: " << numeric_limits<int>::max() << endl;
+	  //cout << "duration of flight to " << cities[destC.cityPos].getName() << ": " << duration[destC.cityPos] << endl;
+	  
+	  cout << "Destination not reachable from " << depart << endl;
+	}
+	else{
+	  stack<Flight> path;
+	  stack<string> names;
+	  City cur = destC;
+	  // chase predecessors until no predecessor
+	  while(prevCity[cur.cityPos] >= 0){
+	    // get city we need to reach before current city
+	    City prev = cities[prevCity[cur.cityPos]];
+	    names.push(prev.getName());
+	    // add bestFlightTo current city
+	    path.push(bestFlightTo[cur.cityPos]);
+	    cur = prev;
+	  }
+
+	  // path established, print out
+	  Flight f;
+	  Time prevArr;
+	  Date d = departDate;
+	  bool newDate = true;
+	  f = path.top();
+	  if(f.depart < departTime)
+	    d = d + 1;
+	  do{
+	    if(newDate){
+	      cout << "\t" << d << endl;
+	      newDate = false;
+	    }
+	    
+	    // print out flight details
+	    cout << "\t   " << names.top() << " ";
+	    names.pop();
+	    cout << f.destCityName << " " << f.depart << " " << f.arrival << " $" << f.price << endl;
+	    path.pop();
+	    // check if next flight is next day
+	    prevArr = f.arrival;
+	    if(!path.empty())
+	      f = path.top();
+	    else
+	      break;
+	    if(f.depart < prevArr){
+	      // flight needs to be taken next day
+	      d = d + 1;
+	      newDate = true;
+	    }
+	  } while(!path.empty());
+	}
+	
 }
 
-void Map::cheapestTrip(string depart, string dest, Time departTime){
-	cout<<"Not yet implemented!"<<endl;
+void Map::cheapestTrip(string depart, string dest, Time departTime, Date departDate){
+  City departC, destC;
+  //cout << "entering loop to get cities" << endl;
+  for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++)
+    {	  
+      if(it->getName() == depart)
+	departC = *it;
+      if(it->getName() == dest)
+	destC = *it;
+    }
+  //cout << "departC: " << departC.getName() << " cityPos: " << departC.cityPos << endl;
+  //cout << "destC: " << destC.getName() << " cityPos: " << destC.cityPos << endl;
+  
+  int n = cities.size();
+  // for Dijkstra
+  vector<float> cost(n, numeric_limits<float>::max()); // weight
+  vector<City> cityQueue = cities; // might need deep copy???
+  // for tracing path
+  vector<Flight> bestFlightTo; 
+  bestFlightTo.resize(n);
+  vector<int> prevCity(n, -1);
+  
+  // initialize for Dijkstra
+  cost[departC.cityPos] = 0;
+
+  // Dijkstra
+  while(!cityQueue.empty()){
+    // find City u with min cost
+    float min = numeric_limits<float>::max();
+    vector<City>::iterator minIter = cityQueue.begin();
+    int minPos = minIter->cityPos;
+    //cout << "finding min..." << endl;
+    for(vector<City>::iterator it = cityQueue.begin(); it != cityQueue.end(); it++){
+      //cout << "min: " << min << " cost: " << cost[it->cityPos] << endl;
+      if(cost[it->cityPos] < min){
+	// new minimum cost
+	minPos = it->cityPos;
+	min = cost[minPos];
+	minIter = it;
+      }
+    }
+    // u is first City in cityQueue with min cost
+    City u = cities[minPos];
+    //cout << "u: " << u.getName() << endl;
+    // remove u from cityQueue
+    cityQueue.erase(minIter);
+    
+    // for each outbound flight f of u
+    for(vector<Flight>::iterator it = u.flights.begin(); it != u.flights.end(); it++){
+      // check for valid flight
+      //if(it->depart > prevArrTime){
+      //cout << "valid flight from " << u.getName() << " to " << it->destCityName << endl;
+      // *it is a flight that departs later than the arrival time to this city u
+      // alt := dist[u] + length(u,v)
+      // alternate cost = cost of flight + cost of route to get to city u
+      int alt = it->price + cost[u.cityPos];
+      if(alt < cost[it->destCityPos]){
+	// found a better route, so update
+	cost[it->destCityPos] = alt;
+	prevCity[it->destCityPos] = u.cityPos;
+	bestFlightTo[it->destCityPos] = *it;
+	//for(vector<City>::iterator it = cities.begin(); it != cities.end(); it++){
+	//  cout << "cost to " << it->getName() << ": " << cost[it->cityPos] << endl;
+	//}
+      }
+      //}
+      //else
+      //cout << "invalid flight from " << u.getName() << " to " << it->destCityName << endl;
+    } // end for each outbound flight f of u	  
+  } // end while(!cityQueue.empty())
+
+  // all flights relaxed
+  if(cost[destC.cityPos] == numeric_limits<float>::max()){
+    //cout << "max int: " << numeric_limits<int>::max() << endl;
+    //cout << "cost of flight to " << cities[destC.cityPos].getName() << ": " << cost[destC.cityPos] << endl;
+    
+    cout << "Destination not reachable from " << depart << endl;
+  }
+  else{
+    stack<Flight> path;
+    stack<string> names;
+    City cur = destC;
+    // chase predecessors until no predecessor
+    while(prevCity[cur.cityPos] >= 0){
+      // get city we need to reach before current city
+      City prev = cities[prevCity[cur.cityPos]];
+      names.push(prev.getName());
+      // add bestFlightTo current city
+      path.push(bestFlightTo[cur.cityPos]);
+      cur = prev;
+    }
+    
+    // path established, print out
+    Flight f;
+    Time prevArr;
+    Date d = departDate;
+    bool newDate = true;
+    f = path.top();
+    if(f.depart < departTime)
+      d = d + 1;
+    do{
+      if(newDate){
+	cout << "\t" << d << endl;
+	newDate = false;
+      }
+      
+      // print out flight details
+      cout << "\t   " << names.top() << " ";
+      names.pop();
+      cout << f.destCityName << " " << f.depart << " " << f.arrival << " $" << f.price << endl;
+      path.pop();
+      // check if next flight is next day
+      prevArr = f.arrival;
+      if(!path.empty())
+	f = path.top();
+      else
+	break;
+      if(f.depart < prevArr){
+	// flight needs to be taken next day
+	d = d + 1;
+	newDate = true;
+      }
+    } while(!path.empty());
+  }
+  
 }
 
 void Map::displayAll(){
